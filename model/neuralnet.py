@@ -33,7 +33,7 @@ class NeuralNetMLP():
 
     def _initialize_weights(self):
         w1 = np.random.uniform(-1.0, 1.0, size=self.n_hidden*(self.n_features+1))
-        w1 = w1.reshape(self.n_hidden, self.n_features+1) # 第一层的权重矩阵(每个隐层对应f+1个权重)
+        w1 = w1.reshape(self.n_hidden, self.n_features+1) # 第一层的权重矩阵(每个隐层单元对应f+1个权重)
         w2 = np.random.uniform(-1.0, 1.0, size=self.n_output*(self.n_hidden+1))
         w2 = w2.reshape(self.n_output, self.n_hidden+1)
         return w1, w2
@@ -77,7 +77,7 @@ class NeuralNetMLP():
         return (lambda_/2.0) * (np.abs(w1[:, 1:]).sum() + np.abs(w2[:,1:]).sum())
 
     def _get_cost(self, y_enc, output, w1, w2):
-        # ???
+        # 损失函数 -y*log(y_pred) - (1-y)*log(1-y_pred)
         term1 = -y_enc * (np.log(output))
         term2 = (1-y_enc) * np.log(1-output)
         cost = np.sum(term1-term2)
